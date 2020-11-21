@@ -1,0 +1,149 @@
+const Discord = require("discord.js");
+const bot = new Discord.Client();
+
+
+bot.on('ready', () => {
+    console.log("I am ready!");
+});
+
+
+bot.on("message", message => {
+   
+    if (message.content.toLowerCase() === "!hello") {
+        message.reply("Bonjour ! :wave: ");
+        message.react(bot.emojis.cache.get("770962960985620500"));
+    }
+
+    if (message.content.toLowerCase() === "!bye") {
+    message.reply("Aurevoir ! :wave: ");
+    message.react(bot.emojis.cache.get("770962960985620500"));
+    }
+
+    if (message.content.toLowerCase().startsWith("!news")) {
+        message.pin();
+    }
+
+    if (message.content.toLowerCase() === "!aide !help ") {
+        //on envoie un message de type embed dans le channel d'où provient le message
+        message.channel.send({
+            embed: {
+                color: 3447003,
+                description: "__**Les différentes commandes:**__",
+                fields: [
+                    {
+                        name: "!help","!aide" ,
+                        value: "Pour afficher cette aide."
+                    },
+                    {
+                        name: "!hello",
+                        value: "Le bot vous répondra Bonjour :) en vous mentionnant !"
+                    },
+                    {
+                        name: "!bye",
+                        value: "Le bot vous répondra Aurevoir !"
+                    },                    
+                    {
+                    name:"!emojiliste",
+                    value:"affiche la liste des émojis"
+                    },
+                    {
+                        name:"!tutoemoji",
+                        value:"affiche l'ID des émojis"
+                    },
+                    {
+                        name:"!news",
+                        value: "épingler un message"
+                    },
+                    {
+                        name:"!quiz",
+                        value: "Zak vous affichera un nouveaux quiz !"
+                     },
+                ]
+            }
+        });
+    }
+
+    if (message.content.toLowerCase() === "!emojiliste") {
+            const emojiliste = message.guild.emojis.cache.map((e) => e);
+            message.channel.send(emojiliste);
+    }
+    if (message.content.toLowerCase() === "!tutoemoji") {
+        const tutoemoji = message.guild.emojis.cache.map((e) => `${e} :` + e.name + ":");
+        message.channel.send(tutoemoji);
+    }
+
+    if (message.content.toLowerCase() === "!quiz") {
+        //on envoie un message de type embed dans le channel d'où provient le message
+        message.channel.send({
+            embed: {
+                color: 3447003,
+                description: "__**3x3+9x9+56+200 = ?:**__",
+                fields: [
+                    {
+                        name:"La réponse est :",
+                        value:"=346"
+                    },
+                    {
+                        name:"La réponse est :",
+                        value:"=358"
+                    },
+                    {
+                        name:"La réponse est :",
+                        value:"=453"
+                     },
+                    
+                    {
+                        name:"écriver la éponse en faisant:",
+                        value:" !346 ou !358 ou !453"
+                     },
+
+
+                ]
+            }
+        });
+    }
+
+    if (message.content.toLowerCase() === "!358") {
+        message.channel.send("Faux !");
+    }
+    if (message.content.toLowerCase() === "!453") {
+        message.channel.send("Faux !");
+    }
+    if (message.content.toLowerCase() === "!346") {
+        message.channel.send("Vrai !");
+    }
+
+
+});
+
+bot.login("CHEH TA PAS LA KEY");
+
+bot.on('message', message => {
+    if (message.member.permissions.has("MANAGE_MESSAGES")) {
+            if (message.content.startsWith("!clear")) {
+                let args = message.content.split(" ");
+
+                if (args[1] == undefined) {
+                    message.reply("nb message définit");
+                }
+                else {
+                     let number = parseInt(args[1]);
+                    
+                    if(isNaN(number)){
+                        message.reply("nb de message définit");
+                    }
+                    else {
+                        message.channel.bulkDelete(number).then(messages => {
+                            console.log("Suppression de " + message.size + " messages réussi !")
+                        }).catch(err => {
+                            console.log("Erreur de clear" + err);
+                        });
+                    }
+                }
+            }
+        }
+
+});
+
+(message.content.toLowerCase() === "!ban") {
+             //ban la personne qui envoie le message
